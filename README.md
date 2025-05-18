@@ -1,8 +1,10 @@
-# Enhanced WhatsApp MCP Server
+# Gopal Shivapuja's Enhanced WhatsApp MCP Server
 
-This repository contains an enhanced version of the [WhatsApp MCP Server](https://github.com/lharries/whatsapp-mcp) by Luke Harries, with added automation scripts for easy setup, automatic startup, self-monitoring, and automatic QR code authentication.
+This repository is a personalized and enhanced version of the [WhatsApp MCP Server](https://github.com/lharries/whatsapp-mcp) by Luke Harries. It includes additional automation scripts for easy setup, automatic startup, self-monitoring, and automatic QR code authentication, tailored and maintained by **Gopal Shivapuja**.
 
-> **Credit**: This project is based on the excellent [WhatsApp MCP Server](https://github.com/lharries/whatsapp-mcp) by [Luke Harries](https://github.com/lharries). I've added automation scripts to enhance usability while maintaining the core functionality of the original project.
+> **Credits:**
+> - Original project: [WhatsApp MCP Server](https://github.com/lharries/whatsapp-mcp) by [Luke Harries](https://github.com/lharries)
+> - Enhancements, automation, and personalization: **Gopal Shivapuja**
 
 ## What This Does
 
@@ -12,7 +14,7 @@ This WhatsApp MCP Server allows you to:
 - Send messages and media through WhatsApp via your AI assistant
 - Automatically handle keeping the service running
 
-## Enhanced Features
+## Enhanced Features (by Gopal Shivapuja)
 
 This version adds several improvements to the original project:
 - **Automatic Startup**: The WhatsApp bridge starts automatically when your system boots
@@ -20,6 +22,7 @@ This version adds several improvements to the original project:
 - **QR Code Authentication**: When your session expires (typically after 20+ days), the system automatically shows a QR code for re-authentication
 - **System Notifications**: You get notified when action is required
 - **Comprehensive Logging**: All activities are properly logged for easy troubleshooting
+- **Automated Setup**: Dependency checking and automatic Python package installation
 
 ## Installation
 
@@ -28,7 +31,7 @@ This version adds several improvements to the original project:
 - macOS (the automation scripts are designed for macOS)
 - Go
 - Python 3.6+
-- UV (Python package manager), install with `curl -LsSf https://astral.sh/uv/install.sh | sh`
+- Either UV or pip Python package manager (the setup script will check and use whichever is available)
 - FFmpeg (optional) - Only needed for sending voice messages
 
 ### Step-by-Step Installation
@@ -52,6 +55,8 @@ This version adds several improvements to the original project:
    bash automation/setup.sh
    ```
    This will:
+   - Check for all required dependencies (Go, Python, etc.)
+   - Install Python requirements automatically if UV or pip is available
    - Create launch agents to run the service at system startup
    - Set up a daily watchdog to check if the service is running
    - Configure automatic QR code display when re-authentication is needed
@@ -83,6 +88,16 @@ This version adds several improvements to the original project:
    `~/.cursor/mcp.json`
 
 ## How the Automation Works
+
+### Automated Scripts
+
+This project includes several well-documented shell scripts in the `automation/` directory:
+
+- **setup.sh**: Main installation script that checks dependencies, installs requirements, and sets up LaunchAgents
+- **uninstall.sh**: Safely removes automation while preserving your WhatsApp data
+- **start-whatsapp-bridge.sh**: Manually starts the WhatsApp bridge if it's not running
+- **check-and-restart-bridge.sh**: Monitors and automatically restarts the bridge if it stops
+- **check-qr-auth.sh**: Detects when authentication is needed and shows a QR code
 
 ### Automatic Startup
 The WhatsApp bridge is configured to start automatically when your system boots through a macOS Launch Agent.
@@ -149,9 +164,18 @@ If you're having trouble with authentication:
 - Restart the bridge: `cd whatsapp-bridge && go run main.go`
 - Scan the QR code with your phone
 
+### Dependency Issues
+If you encounter errors during setup about missing dependencies:
+1. Make sure Go is installed: `go version`
+2. Make sure Python 3 is installed: `python3 --version`
+3. For Python package issues, you can manually install dependencies:
+   ```bash
+   pip install -r whatsapp-mcp-server/requirements.txt
+   ```
+
 ## Migrating to a New Computer
 To set up this system on a new computer:
-1. Install the prerequisites (Go, Python, UV)
+1. Install the prerequisites (Go, Python)
 2. Clone this repository
 3. Run the setup script: `bash automation/setup.sh`
 4. Authenticate with WhatsApp when prompted
@@ -185,8 +209,8 @@ The system consists of three main components:
 
 ## Credits and Acknowledgements
 
-- **Original WhatsApp MCP Server**: Created by Luke Harries. Please visit the original repository for more information about the core functionality.
+- **Original WhatsApp MCP Server**: Created by Luke Harries. Please visit the [original repository](https://github.com/lharries/whatsapp-mcp) for more information about the core functionality.
 - **WhatsApp Connection**: Based on the whatsmeow library by Tulir Asokan.
-- **Automation Scripts**: Added by Gopal Shivapuja to enhance the user experience.
+- **Enhancements, Automation, and Personalization**: Gopal Shivapuja
 
 This project is provided as-is without warranty. Please use responsibly and in accordance with WhatsApp's terms of service.
